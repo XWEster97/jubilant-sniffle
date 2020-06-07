@@ -12,7 +12,7 @@ function test_run_MRLSBCG(m,n,d;
     @assert (m,d)<(n,n) " m,d<n"
     pro=@timed  MRLSBCG!(X, A, B,log=true,
             verbose=true,maxiter=400,
-            tol=sqrt(eps(Float64(1000)))*1000)#*d))
+            tol=sqrt(eps(Float64(1000))))#*d))
     return vcat(pro[1],collect(pro[2:5]))
 end
 
@@ -25,7 +25,7 @@ function test_run_DCG(m,n,d;
 # b=reshape(Vector{Float64}(1:2000),100,20)
     pro=@timed  DiagonalCG!(X, A, B,log=true,
             verbose=true,maxiter=2000,
-            tol=sqrt(eps(Float64(1000)))*1000)
+            tol=sqrt(eps(Float64(1000))))
     return vcat(pro[1],collect(pro[2:5]))
 end
 
@@ -45,7 +45,7 @@ function test_loop(t)
         println("****----------------------d=",b,"--------MRLSBCG-----****")
         pro=test_run_MRLSBCG(6*b+10,8*b+1,Int(ceil(0.3b)))
         test_reserve!(MRLSBCGPerformance,pro)
-        b=4*Int(sqrt(b))
+        b=6*Int(sqrt(b))
         println("****-------DiagonalCG------d=",b,"-------------------****")
         pro=test_run_DCG(6*b+10,8*b+1,Int(ceil(0.3b)))
         test_reserve!(DiagonalPerformance,pro)
@@ -59,7 +59,7 @@ result=test_loop(45) ##performance test
 result[1]
 result[2]
 println("****************************************","Performance Saving")
-save("data/performancerun1.jld", "MRLSBCG", result[1],"Diagonal",result[2])
+save("data/performancerun3.jld", "MRLSBCG", result[1],"Diagonal",result[2])
 println("****************************************","Performance Finished")
 
 function ConvergenceTest(m,n,d)
@@ -79,10 +79,10 @@ function ConvergenceTest(m,n,d)
 end
 # a=ConvergenceTest(25,50,5)
 
-conresult=ConvergenceTest(1300,2000,180)
+conresult=ConvergenceTest(1600,2500,180)
 
 println("****************************************","Recording Convergence Test")
-save("data/maccorun.jld", "MRLSBCG", conresult[1],"Diagonal",conresult[2])
+save("data/maccorun3.jld", "MRLSBCG", conresult[1],"Diagonal",conresult[2])
 println("****************************************","Finished All")
 
 ####################test
