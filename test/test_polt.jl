@@ -5,16 +5,13 @@ using Plots.PlotMeasures
 pyplot()
 pyplot(tickfont=font("serif"), titlefont=font("serif"))
 
-
 function ht(a,b)
     return hcat(a,b)
 end
 
-
-
-result=load("../data/mytest2.jld")
+result=load("data/initgitrun.jld")
 result1=result["MRLSBCG"]
-result2=result["Dangonal"]
+result2=result["Diagonal"]
 malloc1=[getproperty(x,:malloc) for x in result1[!,:memallocs]]
 malloc2=[getproperty(x,:malloc) for x in result2[!,:memallocs]]
 history_data1=[getproperty(x,:data) for x in result1[!,:history]]
@@ -44,4 +41,10 @@ P_pro=plot(P1, P2, P3, P4, P5,layout = grid(5, 1, heights=[0.2 ,0.2, 0.2, 0.2, 0
     xtickfontsize=10,ytickfontsize=10,right_margin = 2mm)
 
 # plot(Plots.fakedata(50, 5), w = 3)
-savefig(P_pro,"../data/P_pro(TightTol).eps")
+savefig(P_pro,"data/initgitrun.eps")
+
+pyplot(tickfont=font("serif"), titlefont=font("serif"))
+result1[!,:history][1].data[:resnorm]
+
+history_data1=[getproperty(x,:data) for x in result1[!,:history]]
+history_data2=[getproperty(x,:data) for x in result2[!,:history]]

@@ -5,7 +5,6 @@ breshape(B)=reshape(B,size(B,1)*size(B,2),1)
 
 function CGblockdiag(d,X::SA.SparseMatrixCSC)
     X=fill(X,d)
-    print(size(X))
     num = length(X)
     mX = Int[ size(x, 1) for x in X ]
     nX = Int[ size(x, 2) for x in X ]
