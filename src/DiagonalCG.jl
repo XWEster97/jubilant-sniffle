@@ -70,7 +70,7 @@ function Diagonal_cg_iterator!(x, A, b, Pl = IS.Identity();
 	mv_products = 0
 	c = similar(x)
 	residual = norm(b)
-	reltol = residual * tol 
+	reltol = residual * tol
     DiagonalCGIterable(A, x, r, c, u,
     reltol, residual, one(residual),
     maxiter, mv_products)
@@ -109,6 +109,6 @@ function DiagonalCG!(x, A, B;
     verbose && println()
     log && IS.setconv(history, converged(iterable))
     log && IS.shrink!(history)
-
-    log ? [history, [size(A,1),size(A,2),size(B,2)]] : iterable.x
+	SB=size(B,2)
+    log ? [history, [size(A,1)/SB,size(A,2)/SB,SB]] : iterable.x
 end
