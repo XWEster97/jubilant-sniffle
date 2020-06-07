@@ -1,5 +1,5 @@
 #coding=utf-8
-Include("head.jl")
+include("head.jl")
 
 struct MRLSBCGStateVariables{T,Tx<:AbstractArray{T}}
     P::Tx

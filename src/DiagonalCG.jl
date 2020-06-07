@@ -1,5 +1,5 @@
 #coding=utf-8
-Include("head.jl")
+include("./head.jl")
 
 breshape(B)=reshape(B,size(B,1)*size(B,2),1)
 
