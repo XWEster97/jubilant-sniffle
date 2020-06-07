@@ -68,14 +68,13 @@ function Diagonal_cg_iterator!(x, A, b, Pl = IS.Identity();
 
 	mv_products = 0
 	c = similar(x)
-	residual = norm(b)
+	residual = norm(r)
 	reltol = residual * tol
+	@printf("%s\t%1.2e\n","reltol=",reltol)
     DiagonalCGIterable(A, x, r, c, u,
     reltol, residual, one(residual),
     maxiter, mv_products)
 end
-
-
 
 function DiagonalCG!(x, A, B;
     tol = sqrt(eps(real(eltype(B)))),

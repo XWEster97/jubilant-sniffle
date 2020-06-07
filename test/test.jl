@@ -49,9 +49,9 @@ function test_loop(t)
         println("****-------DiagonalCG------d=",b,"-------------------****")
         pro=test_run_DCG(6*b+10,8*b+1,Int(ceil(0.3b)))
         test_reserve!(DiagonalPerformance,pro)
-            # println(pro)
+
     end
-    # println(typeof(pro))
+
     return MRLSBCGPerformance,DiagonalPerformance
 end
 test_loop(9)   ### PRECOMPILE
@@ -70,16 +70,16 @@ function ConvergenceTest(m,n,d)
     A = rand(Uniform(1,10000),(m,n))#Matrix{Float64}(I, 100, 100)
     X = zeros(n,d)
     B = rand(Uniform(-1000,1000),(m,d))
-    pro2=  test_run_DCG(m,n,d)
+    pro2=  test_run_DCG(m,n,d,A=A,X=X,B=B)
     test_reserve!(ConDiagonalPerformance,pro2)
     pro2=0#free memory
-    pro1= test_run_MRLSBCG(m,n,d)
+    pro1= test_run_MRLSBCG(m,n,d;A=A,X=X,B=B)
     test_reserve!(ConMRLSBCGPerformance,pro1)
     return ConMRLSBCGPerformance,ConDiagonalPerformance
 end
-# a=ConvergenceTest(25,50,5)
 
-conresult=ConvergenceTest(1000,1500,90)
+
+conresult=ConvergenceTest(1600,2500,180)
 
 println("****************************************","Recording Convergence Test")
 save("data/coinitgitrun.jld", "MRLSBCG", conresult[1],"Diagonal",conresult[2])
