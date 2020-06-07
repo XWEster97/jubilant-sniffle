@@ -55,11 +55,11 @@ function test_loop(t)
     return MRLSBCGPerformance,DiagonalPerformance
 end
 test_loop(9)   ### PRECOMPILE
-result=test_loop(9) ##performance test
+result=test_loop(45) ##performance test
 result[1]
 result[2]
 println("****************************************","Performance Saving")
-save("data/initgitrun1.jld", "MRLSBCG", result[1],"Diagonal",result[2])
+save("data/performancerun1.jld", "MRLSBCG", result[1],"Diagonal",result[2])
 println("****************************************","Performance Finished")
 
 function ConvergenceTest(m,n,d)
@@ -79,10 +79,10 @@ function ConvergenceTest(m,n,d)
 end
 # a=ConvergenceTest(25,50,5)
 
-conresult=ConvergenceTest(1000,1500,90)
+conresult=ConvergenceTest(1300,2000,180)
 
 println("****************************************","Recording Convergence Test")
-save("data/coinitgitrun.jld", "MRLSBCG", conresult[1],"Diagonal",conresult[2])
+save("data/maccorun.jld", "MRLSBCG", conresult[1],"Diagonal",conresult[2])
 println("****************************************","Finished All")
 
 ####################test
