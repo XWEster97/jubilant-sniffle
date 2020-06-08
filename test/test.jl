@@ -12,7 +12,7 @@ function test_run_MRLSBCG(m,n,d;
     @assert (m,d)<(n,n) " m,d<n"
     pro=@timed  MRLSBCG!(X, A, B,log=true,
             verbose=true,maxiter=400,
-            tol=sqrt(eps(Float64(1000)))*1000)#*d))
+            tol=sqrt(eps(Float64(1000)))*1)#*d))
     return vcat(pro[1],collect(pro[2:5]))
 end
 
@@ -25,7 +25,7 @@ function test_run_DCG(m,n,d;
 # b=reshape(Vector{Float64}(1:2000),100,20)
     pro=@timed  DiagonalCG!(X, A, B,log=true,
             verbose=true,maxiter=2000,
-            tol=sqrt(eps(Float64(1000)))*1000)
+            tol=sqrt(eps(Float64(1000)))*1)
     return vcat(pro[1],collect(pro[2:5]))
 end
 
@@ -51,15 +51,14 @@ function test_loop(t)
         test_reserve!(DiagonalPerformance,pro)
 
     end
-
     return MRLSBCGPerformance,DiagonalPerformance
 end
 test_loop(9)   ### PRECOMPILE
-result=test_loop(9) ##performance test
+result=test_loop(39) ##performance test
 result[1]
 result[2]
 println("****************************************","Performance Saving")
-save("data/initgitrun1.jld", "MRLSBCG", result[1],"Diagonal",result[2])
+save("data/68thinkpr.jld", "MRLSBCG", result[1],"Diagonal",result[2])
 println("****************************************","Performance Finished")
 
 function ConvergenceTest(m,n,d)
@@ -70,19 +69,21 @@ function ConvergenceTest(m,n,d)
     A = rand(Uniform(1,10000),(m,n))#Matrix{Float64}(I, 100, 100)
     X = zeros(n,d)
     B = rand(Uniform(-1000,1000),(m,d))
+
     pro2=  test_run_DCG(m,n,d,A=A,X=X,B=B)
     test_reserve!(ConDiagonalPerformance,pro2)
     pro2=0#free memory
     pro1= test_run_MRLSBCG(m,n,d;A=A,X=X,B=B)
     test_reserve!(ConMRLSBCGPerformance,pro1)
+    pro1=0
     return ConMRLSBCGPerformance,ConDiagonalPerformance
 end
 
 
-conresult=ConvergenceTest(1600,2500,180)
+conresult=ConvergenceTest(500,1000,50)
 
 println("****************************************","Recording Convergence Test")
-save("data/coinitgitrun.jld", "MRLSBCG", conresult[1],"Diagonal",conresult[2])
+save("data/68thinkco.jld", "MRLSBCG", conresult[1],"Diagonal",conresult[2])
 println("****************************************","Finished All")
 
 ####################test

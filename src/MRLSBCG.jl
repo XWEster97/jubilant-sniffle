@@ -98,7 +98,7 @@ function MRLSBCG!(X, A, B;
     log && IS.setconv(history, converged(iterable))
     log && IS.shrink!(history)
 
-    log ? [history, [size(A,1),size(A,2),size(B,2)]] : iterable.X
+    log ? [history,Base.summarysize(A)] : iterable.X
 
 end
 # A= rand(Uniform(1,10000),(1000,1800))#Matrix{Float64}(I, 100, 100)

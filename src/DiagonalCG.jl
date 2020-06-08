@@ -108,5 +108,6 @@ function DiagonalCG!(x, A, B;
     log && IS.setconv(history, converged(iterable))
     log && IS.shrink!(history)
 	SB=size(B,2)
-    log ? [history, [size(A,1)/SB,size(A,2)/SB,SB]] : iterable.x
+    log ? [history,Base.summarysize(A'*A)] : iterable.x
 end
+ # [size(A,1)/SB,size(A,2)/SB,SB]
